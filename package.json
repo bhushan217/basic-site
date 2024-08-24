@@ -6,7 +6,7 @@
   "packageManager": "pnpm@9.8.0",
   "scripts": {
     "predeploy": "pnpm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "gh-pages -d dist/basic-site",
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
