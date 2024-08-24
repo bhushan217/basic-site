@@ -37,20 +37,20 @@ jobs:
         run: pnpm install --force
       - name: Build
         run: pnpm run build
-        with: 
-          path: ./dist
+        # with: 
+        #   path: ./dist
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
-          source: ./dist
+          source: ./
           destination: ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-        with: 
-          # files: dist/*
-          path: ./dist
+        # with: 
+        #   # files: dist/*
+        #   path: ./dist
 
   # Deployment job
   deploy:
