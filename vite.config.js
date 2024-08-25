@@ -16,5 +16,19 @@ export default defineConfig({
   },
   build: {
     outDir: './dist/basic-site',
-  }
+  },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
+
+	compilerOptions: {
+		runes: true // Which could also be false if you want to force the Svelte 4 compiler/syntax
+	}
 })

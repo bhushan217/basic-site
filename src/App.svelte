@@ -3,6 +3,7 @@
   import viteLogo from '/vite.svg'
   import Counter from './lib/Counter.svelte'
     import Breadcrumb from './lib/Breadcrumb.svelte';
+    import Table from './lib/Table.svelte';
 
 </script>
 
@@ -30,6 +31,7 @@
     <div class="page-title">TITLE OF PAGE</div>
     <Counter ></Counter>
     <Breadcrumb></Breadcrumb>
+    <Table></Table>
     <div class="dash-chips">
       <div class="dash-chip"><div class="count">12</div><div class="label">Label</div><div class="icon">🔴</div></div>
       <div class="dash-chip"><div class="count">12</div><div class="label">Label</div><div class="icon">🟢</div></div>
