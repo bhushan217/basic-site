@@ -63,32 +63,49 @@ export class RepositoryResponse {
         `${this.apiPath}?page=${this.page}&size=${this.size}&sort=${this.sort.col},${this.sort.ord}`
       )
       let data = {}
-      if (response.status >= 500) {
-        throw Error('Response is errornous ', {
-          cause: { status: response.status, message: response.statusText }
-        })
+      if (response.status <= 300) {
+        data = await response.json()
+        const endTime = Date.now()
+        this.timeTaken = endTime - initTime
+        // console.log({ timeTaken, endTime, initTime })
+        this.rows = data.content ?? []
+        this.page = data.page.number || 0
+        this.totalPages = data.page.totalPages || 0
+        this.totalElements = data.page.totalElements || 0
+        this.error = { status: response.status, message: null, error: null }
+        return
       }
-      if (response.status >= 400) {
+      if (response.status <= 500) {
+        data = tempData
+        // throw Error('Response is errornous ', {
+        //   cause: { status: response.status, message: response.statusText }
+        // })
+        const endTime = Date.now()
+        this.timeTaken = endTime - initTime
+        // console.log({ timeTaken, endTime, initTime })
+        this.rows = data.content ?? []
+        this.page = data.page.number || 0
+        this.totalPages = data.page.totalPages || 0
+        this.totalElements = data.page.totalElements || 0
+        return
+      }
+      if (response.status <= 400) {
         // set temp data for github-page
         data = tempData
+        const endTime = Date.now()
+        this.timeTaken = endTime - initTime
+        // console.log({ timeTaken, endTime, initTime })
+        this.rows = data.content ?? []
+        this.page = data.page.number || 0
+        this.totalPages = data.page.totalPages || 0
+        this.totalElements = data.page.totalElements || 0
       }
-      if (response.status >= 200) {
-        data = await response.json()
-      }
-      const endTime = Date.now()
-      this.timeTaken = endTime - initTime
-      // console.log({ timeTaken, endTime, initTime })
-      this.rows = data.content ?? []
-      this.page = data.page.number || 0
-      this.totalPages = data.page.totalPages || 0
-      this.totalElements = data.page.totalElements || 0
-      this.error = { status: response.status, message: null, error: null }
-      this.isLoading = false
     } catch (err) {
-      this.rows = err.status === 404 ? tempData.content : []
-      this.error = { ...err.cause, error: err.message }
+      this.rows = err.status >= 500 ? tempData.content : []
+      this.error = err.status >= 500 ? {} : { ...err.cause, error: err.message }
+    } finally {
+      this.isLoading = false
     }
-    this.isLoading = false
   }
 }
 
