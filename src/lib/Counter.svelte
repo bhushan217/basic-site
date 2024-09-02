@@ -9,7 +9,7 @@
 	}
 </script>
 
-<button accesskey="a" onclick={increment}>Increment (+)</button>
+<button aria-keyshortcuts="s" onclick={increment}>Increment (+)</button>
 Count is {count}
-<button disabled accesskey="-" onclick={decrement}>Decrement (-)</button>
+<button disabled aria-keyshortcuts="Alt+ArrowDown" onclick={decrement}>Decrement (-)</button>
 <br/>

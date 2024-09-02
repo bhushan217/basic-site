@@ -32,6 +32,8 @@ ol {
   line-height: 1.5em;
   color-scheme: light dark;
 
+  // 
+
   // ---------- DIMENSION ---------- //
   // LENGTH
   --len-xs: 12rem;
@@ -41,6 +43,7 @@ ol {
   --len-xl: 80rem;
 
   // GUTTER
+  --gtr-xs2: 0.125em;
   --gtr-xs: 0.25em;
   --gtr-s: 0.5em;
   --gtr: 1rem;
@@ -48,8 +51,38 @@ ol {
   --gtr-h: 3rem;
   --gtr-xl: 4rem;
 
-  // ========== DARK THEME ========== //
-  // ---------- COLOR ---------- //
+  // BREAKPOINT
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1440px;
+
+//width="26.6" height="32"
+// ---------- COLOR ---------- //
+  --blue: #007bff;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #e83e8c;
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #28a745;
+  --teal: #20c997;
+  --cyan: #17a2b8;
+  --white: #fff;
+  --gray: #7c7c7c;
+  --gray-dark: #383838;
+  --primary: #171717;
+  --secondary: #7c7c7c;
+  --success: #28a745;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #e03636;
+  --light: #f3f3f3;
+  --dark: var(--gray-dark);
+// ========== DARK THEME ========== //
   // BRAND
   --pm-color: #0a65ba;
   --pm-color-l: #2472bb;
@@ -237,6 +270,92 @@ ol {
   border: 1px dotted var(--sd-color-l);
 }
 
+// ================ PAGINATION ================ //
+.page-bar,
+.page-nav,
+.page-api,
+.page-row-stat,
+.page-size {
+  @extend .df-rc;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--bg-color-l);
+  padding: var(--gtr-xs);
+  color: var(--tx-color-l);
+
+  
+}
+.page-bar{
+  .page-size{
+    select{
+      height: var(--gtr-l);
+      padding: var(--gtr-xs);
+    }
+  } 
+  .btn-sm{
+    font-size: var(--gtr);
+  }
+  .api-time {
+    padding-left: var(--gtr-s);
+    color: var(--sd-color-l);
+    font-size: 0.7em;
+  }
+  .btn-grp{
+    @extend .df-rc;
+    gap:0;
+    button{margin: 0;
+    &.bg-pml:not(.disabled){
+      outline: 1px dashed var(--pm-color-l);
+      outline-offset: 1px;
+      // color: var(--sd-color); // ?
+    }
+    }
+    
+    .disabled{
+    cursor: not-allowed;
+    button{
+      pointer-events: none;
+
+    }}
+  }
+}
+
+// CARD
+
+.container.row{
+  @extend .df-rc;
+}
+
+.container{
+  padding: var(--gtr-s);
+  &:hover{
+    backdrop-filter: brightnes(1.2);
+  }
+  .title{
+    font-weight: 700;
+    overflow-x: clip;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .description{
+    font-size: x-small;
+    color: var(--tx-color-l);
+  }
+  .cur-code{
+    color: var(--sd-color-l);
+  }
+  .sym{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 1.2em;
+    width: var(--gtr-h);
+    background-color: var(--sd-color-l);
+    color: var(--pm-color-l);
+    padding: var(--gtr-xs);
+  }
+}
+
 // ================ UTILS ------------------ //
 
 .container {
@@ -257,6 +376,19 @@ a {
   color: var(--pm-color);
   text-decoration: inherit;
 }
+.text-dots {
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+}
+.btn-sm {
+  margin: 0 var(--gtr-s);
+}
+.ff-sm {
+  margin: 0 var(--gtr-s);
+}
+
 :disabled,
 [aria-disabled='true'],
 .disabled {
@@ -284,6 +416,7 @@ a {
 .act {
   @extend .bg-tsn;
   @extend .bg-pm;
+  @extend .text-dots;
   cursor: pointer;
   padding: 0.5em 0.75em;
   border-radius: 0.25em;
@@ -310,6 +443,12 @@ a {
 .btn,
 button {
   @extend .act;
+}
+.container {
+  .title,
+  .description {
+    @extend .text-dots;
+  }
 }
 
 // =============== APP CSS ============ //
@@ -469,6 +608,27 @@ button {
       margin-right: 1em;
     }
   }
+}
+button, [type="button"], [type="reset"], [type="submit"], .btn, a, a:focus, a:focus-within, a:active, a:visited {
+  appearance: button;
+  background-color: transparent;
+  background-image: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  &:hover{
+    background-color: var(--bg-color-l);
+  }
+  &:focus{
+    background-color: var(--pm-color-l);
+    @extend .bg-sd
+  }
+}
+.transition {
+  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+  transition-duration: .15s;
 }
 
 // BREADCRUMB---//
